@@ -20,7 +20,7 @@ class InterfaceDemoApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Interface Demo',
-    theme: ThemeData(useMaterial3: false, scaffoldBackgroundColor: Colors.white, fontFamily: 'Roboto', colorScheme: ColorScheme.fromSeed(seedColor: purple)),
+    theme: ThemeData(useMaterial3: false, scaffoldBackgroundColor: Colors.white, fontFamily: 'Gotham-SSm', colorScheme: ColorScheme.fromSeed(seedColor: purple)),
     home: const HomeScreen(),
   );
 }
