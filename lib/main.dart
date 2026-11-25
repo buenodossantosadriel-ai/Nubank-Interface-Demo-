@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _quickActions() {
     final actions = <(String, IconData)>[
-      ('Pix', Icons.pix), ('Pagar', Icons.qr_code_scanner), ('Transferir', Icons.swap_horiz),
+      ('Pix', Icons.qr_code_2), ('Pagar', Icons.qr_code_scanner), ('Transferir', Icons.swap_horiz),
       ('Depositar', Icons.south_west), ('Empréstimos', Icons.person_outline),
       ('Recarga de celular', Icons.phone_android), ('Cobrar', Icons.call_made),
       ('Doação', Icons.favorite_border), ('Encontrar atalhos', Icons.grid_view),
