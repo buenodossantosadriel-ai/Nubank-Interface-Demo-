@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(24), child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ink)),
         const SizedBox(height: 12), Text(body, style: const TextStyle(color: muted, height: 1.5)),
-        const SizedBox(height: 16), const DemoBanner(), const SizedBox(height: 16),
+        const SizedBox(height: 16),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Navigator.pop(ctx), style: ElevatedButton.styleFrom(backgroundColor: purple, foregroundColor: Colors.white), child: const Text('Fechar'))),
       ]),
     )));
@@ -57,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet<void>(context: context, isScrollControlled: true, backgroundColor: Colors.white, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))), builder: (ctx) => Padding(
       padding: EdgeInsets.fromLTRB(22, 24, 22, MediaQuery.of(ctx).viewInsets.bottom + 24),
       child: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-        const Text('Configurar conta demo', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ink)),
+        const Text('Configurar conta', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ink)),
         const SizedBox(height: 8), const Text('Altere o nome e o saldo fictício exibidos na tela.', style: TextStyle(color: muted)),
         const SizedBox(height: 18), field(name, 'Nome exibido', icon: Icons.person_outline),
         const SizedBox(height: 12), field(amount, 'Saldo demonstrativo (R\$)', keyboard: TextInputType.number, icon: Icons.account_balance_wallet_outlined),
-        const SizedBox(height: 14), const DemoBanner(), const SizedBox(height: 18),
+        const SizedBox(height: 18),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {
           final parsed = double.tryParse(amount.text.trim().replaceAll('.', '').replaceAll(',', '.'));
           if (name.text.trim().isEmpty || parsed == null || parsed < 0) {
@@ -75,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
-  void pix() => operation('Enviar Pix • demonstração', 'Pix', 'Chave Pix do destinatário', 'CPF, e-mail, telefone ou chave aleatória');
-  void transfer() => operation('Transferência • demonstração', 'Transferência', 'Destinatário', 'Nome fictício do destinatário');
+  void pix() => operation('Enviar Pix', 'Pix', 'Chave Pix do destinatário', 'CPF, e-mail, telefone ou chave aleatória');
+  void transfer() => operation('Transferência', 'Transferência', 'Destinatário', 'Nome fictício do destinatário');
 
   void operation(String title, String type, String recipientLabel, String hint) {
     final recipient = TextEditingController();
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(height: 18), field(recipient, recipientLabel, hint: hint),
         const SizedBox(height: 12), field(amount, 'Valor fictício (R\$)', hint: '0,00', keyboard: const TextInputType.numberWithOptions(decimal: true)),
         const SizedBox(height: 12), field(description, 'Descrição que aparecerá no extrato', hint: 'Ex.: almoço, teste, aluguel'),
-        const SizedBox(height: 14), const DemoBanner(), const SizedBox(height: 18),
+        const SizedBox(height: 18),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {
           final parsed = double.tryParse(amount.text.trim().replaceAll('.', '').replaceAll(',', '.'));
           if (recipient.text.trim().isEmpty || parsed == null || parsed <= 0) {
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           Navigator.pop(ctx);
           review(type, recipient.text.trim(), parsed, description.text.trim());
-        }, style: ElevatedButton.styleFrom(backgroundColor: purple, foregroundColor: Colors.white, padding: const EdgeInsets.all(14)), child: const Text('Revisar simulação'))),
+        }, style: ElevatedButton.styleFrom(backgroundColor: purple, foregroundColor: Colors.white, padding: const EdgeInsets.all(14)), child: const Text('Continuar'))),
       ])),
     ));
   }
@@ -110,12 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
         const Icon(Icons.visibility_outlined, color: purple, size: 34),
         const SizedBox(height: 10), const Text('Revisão da simulação', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ink)),
         const SizedBox(height: 16), detail('Tipo', type), detail('Destinatário', recipient), detail('Valor fictício', money(amount)), detail('Descrição no extrato', description.isEmpty ? type : description),
-        const SizedBox(height: 14), const DemoBanner(), const SizedBox(height: 18),
+        const SizedBox(height: 18),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {
           setState(() => movements.insert(0, Movement(type, (description.isEmpty ? type : description) + ' • ' + recipient + ' • SIMULADO', -amount, DateTime.now())));
           Navigator.pop(ctx);
           message('Lançamento de demonstração criado', 'O item fictício foi incluído no extrato desta sessão. Nenhum Pix ou transferência foi enviado e o saldo não foi movimentado.');
-        }, style: ElevatedButton.styleFrom(backgroundColor: purple, foregroundColor: Colors.white, padding: const EdgeInsets.all(14)), child: const Text('Adicionar ao extrato demo'))),
+        }, style: ElevatedButton.styleFrom(backgroundColor: purple, foregroundColor: Colors.white, padding: const EdgeInsets.all(14)), child: const Text('Confirmar'))),
       ]),
     )));
   }
@@ -125,11 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet<void>(context: context, isScrollControlled: true, backgroundColor: Colors.white, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))), builder: (ctx) => Padding(
       padding: EdgeInsets.fromLTRB(22, 24, 22, MediaQuery.of(ctx).viewInsets.bottom + 24),
       child: SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-        const Text('Adicionar item ao extrato demo', style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: ink)),
+        const Text('Adicionar item ao extrato', style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: ink)),
         const SizedBox(height: 16), field(title, 'Título', hint: 'Ex.: Compra, pagamento, depósito'),
         const SizedBox(height: 12), field(description, 'Descrição', hint: 'Texto exibido no extrato'),
         const SizedBox(height: 12), field(amount, 'Valor (R\$)', hint: 'Negativo para saída', keyboard: const TextInputType.numberWithOptions(decimal: true, signed: true)),
-        const SizedBox(height: 14), const DemoBanner(), const SizedBox(height: 16),
+        const SizedBox(height: 16),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {
           final parsed = double.tryParse(amount.text.trim().replaceAll('.', '').replaceAll(',', '.'));
           if (title.text.trim().isEmpty || parsed == null || parsed == 0) {
@@ -147,14 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet<void>(context: context, isScrollControlled: true, backgroundColor: Colors.white, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))), builder: (ctx) => DraggableScrollableSheet(
       expand: false, initialChildSize: .78, minChildSize: .45, maxChildSize: .92,
       builder: (ctx, scroll) => Padding(padding: const EdgeInsets.fromLTRB(20, 20, 20, 12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text('Extrato da conta demo', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ink)),
+        const Text('Extrato', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: ink)),
         const SizedBox(height: 5), const Text('Movimentações fictícias desta sessão.', style: TextStyle(color: muted)),
-        const SizedBox(height: 12), const DemoBanner(), const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Expanded(child: ListView.separated(controller: scroll, itemCount: movements.length, separatorBuilder: (_, __) => const Divider(height: 1), itemBuilder: (_, i) {
           final item = movements[i];
           return ListTile(contentPadding: EdgeInsets.zero, leading: CircleAvatar(backgroundColor: pale, child: Icon(item.amount < 0 ? Icons.arrow_upward : Icons.arrow_downward, color: purple)), title: Text(item.title, style: const TextStyle(fontWeight: FontWeight.w600, color: ink)), subtitle: Text(item.description + '\n' + dateText(item.date), style: const TextStyle(color: muted, height: 1.5)), isThreeLine: true, trailing: Text((item.amount < 0 ? '−' : '+') + money(item.amount), style: TextStyle(fontWeight: FontWeight.bold, color: item.amount < 0 ? ink : Colors.green)));
         })),
-        SizedBox(width: double.infinity, child: OutlinedButton.icon(onPressed: () { Navigator.pop(ctx); addMovement(); }, icon: const Icon(Icons.edit_note), label: const Text('Adicionar lançamento fictício'))),
+        SizedBox(width: double.infinity, child: OutlinedButton.icon(onPressed: () { Navigator.pop(ctx); addMovement(); }, icon: const Icon(Icons.edit_note), label: const Text('Adicionar lançamento'))),
       ])),
     ));
   }
@@ -173,6 +173,8 @@ class _HomeScreenState extends State<HomeScreen> {
         feature('Seguro de vida', 'Conheça uma experiência simples e que cabe no bolso.', '', '', Icons.favorite_border, () => message('Seguro de vida', 'Conteúdo demonstrativo.')),
         const Padding(padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20), child: Text('Descubra mais', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: ink))),
         discover(),
+        const SizedBox(height: 28),
+        const Center(child: Padding(padding: EdgeInsets.only(bottom: 8), child: Text('Ambiente demonstrativo', style: TextStyle(fontSize: 8, color: Color(0xFFB8B8B8))))),
       ])),
     ])))),
   );
@@ -195,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget accountCard() => InkWell(onTap: statement, child: Padding(padding: const EdgeInsets.fromLTRB(24, 22, 24, 18), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     const Row(children: [Text('Conta', style: TextStyle(fontSize: 16, color: ink, fontWeight: FontWeight.w500)), Spacer(), Icon(Icons.chevron_right, color: muted)]),
     const SizedBox(height: 16), Text(showValues ? money(balance) : '••••••', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: ink)),
-    const SizedBox(height: 7), const Text('Toque para abrir o extrato demo', style: TextStyle(fontSize: 11, color: muted)),
+    const SizedBox(height: 7), const Text('Toque para abrir o extrato', style: TextStyle(fontSize: 11, color: muted)),
   ])));
 
   Widget quickActions() {
@@ -253,10 +255,4 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget detail(String label, String value) => Padding(padding: const EdgeInsets.symmetric(vertical: 7), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
     SizedBox(width: 132, child: Text(label, style: const TextStyle(color: muted))), Expanded(child: Text(value.isEmpty ? 'Não informado' : value, style: const TextStyle(color: ink, fontWeight: FontWeight.w600))),
   ]));
-}
-
-class DemoBanner extends StatelessWidget {
-  const DemoBanner({super.key});
-  @override
-  Widget build(BuildContext context) => Container(width: double.infinity, padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: const Color(0xFFF4EAFE), borderRadius: BorderRadius.circular(10)), child: const Text('SIMULAÇÃO — este aplicativo é apenas demonstrativo. Não envia Pix, não realiza transferências e não movimenta dinheiro real.', style: TextStyle(fontSize: 11, color: Color(0xFF5D2480), height: 1.4)));
 }
